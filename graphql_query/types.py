@@ -431,13 +431,6 @@ class InlineFragment(_GraphQL2PythonQuery):
 
     _template: Template = template_env.get_template("inline_fragment.jinja2")
 
-    @validator("fields")
-    def graphql_inline_fragment_fields(
-        cls, fields: List[Union[str, 'Field', 'InlineFragment', 'Fragment']]
-    ) -> List[Union[str, 'Field', 'InlineFragment', 'Fragment']]:
-        if len(fields) == 0:
-            raise ValueError("empty fields for this inline fragment")
-        return fields
 
     def render(self) -> str:
         return self._template.render(
@@ -645,11 +638,6 @@ class Operation(_GraphQL2PythonQuery):
             return assert_name(name)
         return name
 
-    @validator("queries")
-    def graphql_queries(cls, queries: List[Query]) -> List[Query]:
-        if len(queries) == 0:
-            raise ValueError("empty queries list for this operation")
-        return queries
 
     def render(self) -> str:
         return self._template.render(
